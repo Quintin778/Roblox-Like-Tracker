@@ -7,22 +7,20 @@ app.use(cors());
 
 const PORT = process.env.PORT || 3000;
 
-// ✅ Make sure this is your correct PLACE ID (not universeId!)
-const PLACE_ID = '119970025188147';
-const VOTE_API_URL = `https://games.roblox.com/v1/games/votes?placeId=${PLACE_ID}`;
+// ✅ Use Universe ID, not Place ID
+const UNIVERSE_ID = '1234567890'; // <-- Replace with your actual Universe ID
+const VOTE_API_URL = `https://games.roblox.com/v1/games/votes?universeIds=${UNIVERSE_ID}`;
 
 async function fetchLikeCount() {
   try {
     const response = await axios.get(VOTE_API_URL);
 
-    // Roblox should return: { upVotes: number, downVotes: number }
-    const { upVotes } = response.data;
-
-    if (typeof upVotes !== 'number') {
+    const voteData = response.data.data?.[0]; // Get the first entry in the data array
+    if (!voteData || typeof voteData.upVotes !== 'number') {
       throw new Error('Invalid response from Roblox API');
     }
 
-    return upVotes;
+    return voteData.upVotes;
   } catch (error) {
     console.error('Error fetching like count:', error.message);
     throw error;
@@ -39,4 +37,5 @@ app.get('/likes', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running o
+  console.log(`Server is running on port ${PORT}`);
+});
