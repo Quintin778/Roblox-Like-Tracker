@@ -9,17 +9,17 @@ const UNIVERSE_ID = '7728250854';
 
 app.get('/likes', async (req, res) => {
     try {
-        const url = `https://games.roblox.com/v1/games?universeIds=${UNIVERSE_ID}`;
+        const url = `https://games.roblox.com/v1/universes/${UNIVERSE_ID}/configuration`;
         const response = await axios.get(url);
 
-        console.log("Games API response data:", response.data);
+        console.log("Universe API response data:", response.data);
 
-        const gamesData = response.data.data;
-        const likes = gamesData.length > 0 ? gamesData[0].favoritedCount || 0 : 0;
+        // Get favoritedCount as likes
+        const likes = response.data.favoritedCount || 0;
 
         res.json({ likes });
     } catch (error) {
-        console.error("Error fetching like count:", error.message || error);
+        console.error("Error fetching like count:", error);
         res.status(500).json({ error: 'Failed to fetch like count' });
     }
 });
