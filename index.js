@@ -14,9 +14,10 @@ app.get('/likes', async (req, res) => {
 
         console.log("Roblox API response data:", response.data);
 
-        // Safe extraction of likes count
         const gameData = response.data?.data?.[0];
-        const likes = gameData?.thumbsUpCount ?? 0;
+
+        // Try thumbsUpCount, else favoritedCount, else 0
+        const likes = gameData?.thumbsUpCount ?? gameData?.favoritedCount ?? 0;
 
         res.json({ likes });
     } catch (error) {
