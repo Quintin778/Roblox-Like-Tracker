@@ -6,33 +6,23 @@ const app = express();
 app.use(cors());
 
 const PORT = process.env.PORT || 3000;
-const UNIVERSE_ID = '7728250854';
-const ROBLOX_API_URL = `https://games.roblox.com/v1/games?universeIds=${UNIVERSE_ID}`;
+const PLACE_ID = '119970025188147'; // Replace this with your actual PLACE ID, not universe ID
+
+const ROBLOX_VOTE_API_URL = `https://games.roblox.com/v1/games/votes?placeId=${PLACE_ID}`;
 
 /**
- * Fetch like count from Roblox API for the given universe ID.
- * Returns thumbsUpCount if available, otherwise favoritedCount or zero.
+ * Fetch like count (thumbs up) from Roblox API for the given place ID.
  */
 async function fetchLikeCount() {
   try {
-    const { data } = await axios.get(ROBLOX_API_URL);
+    const { data } = await axios.get(ROBLOX_VOTE_API_URL);
 
-    if (!data || !Array.isArray(data.data) || data.data.length === 0) {
-      throw new Error('No game data found in Roblox API response');
+    if (!data || typeof data.upVotes !== 'number') {
+      throw new Error('Invalid vote data from Roblox API');
     }
 
-    const gameInfo = data.data[0];
-
-    // Return thumbsUpCount if number, else favoritedCount, else 0
-    if (typeof gameInfo.thumbsUpCount === 'number') {
-      return gameInfo.thumbsUpCount;
-    }
-    if (typeof gameInfo.favoritedCount === 'number') {
-      return gameInfo.favoritedCount;
-    }
-    return 0;
+    return data.upVotes;
   } catch (error) {
-    // Log detailed error for debugging
     console.error('Error fetching like count:', error.message || error);
     throw error;
   }
