@@ -5,7 +5,7 @@ const axios = require('axios');
 const app = express();
 app.use(cors());
 
-const UNIVERSE_ID = 'YOUR_UNIVERSE_ID'; // Replace with your universeId
+const UNIVERSE_ID = '7728250854'; // Replace with your universeId
 
 app.get('/likes', async (req, res) => {
     try {
