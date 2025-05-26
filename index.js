@@ -11,7 +11,7 @@ const ROBLOX_API_URL = `https://games.roblox.com/v1/games?universeIds=${UNIVERSE
 
 /**
  * Fetch like count from Roblox API for the given universe ID.
- * Returns the thumbsUpCount if available, otherwise favoritedCount or zero.
+ * Returns thumbsUpCount if available, otherwise favoritedCount or zero.
  */
 async function fetchLikeCount() {
   try {
