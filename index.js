@@ -8,7 +8,7 @@ app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 // ✅ Use Universe ID, not Place ID
-const UNIVERSE_ID = '1234567890'; // <-- Replace with your actual Universe ID
+const UNIVERSE_ID = '7728250854'; // <-- Replace with your actual Universe ID
 const VOTE_API_URL = `https://games.roblox.com/v1/games/votes?universeIds=${UNIVERSE_ID}`;
 
 async function fetchLikeCount() {
