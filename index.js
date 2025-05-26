@@ -5,7 +5,6 @@ const axios = require('axios');
 const app = express();
 app.use(cors());
 
-// Use your game's universe ID here (not the rootPlaceId)
 const UNIVERSE_ID = '7728250854';
 
 app.get('/likes', async (req, res) => {
@@ -15,9 +14,8 @@ app.get('/likes', async (req, res) => {
 
         console.log("Games API response data:", response.data);
 
-        // Response data contains an array "data" with game info objects
         const gamesData = response.data.data;
-        const likes = gamesData.length > 0 ? gamesData[0].likes || 0 : 0;
+        const likes = gamesData.length > 0 ? gamesData[0].favoritedCount || 0 : 0;
 
         res.json({ likes });
     } catch (error) {
