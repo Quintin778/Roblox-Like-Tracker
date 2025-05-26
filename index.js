@@ -5,26 +5,28 @@ const axios = require('axios');
 const app = express();
 app.use(cors());
 
-const UNIVERSE_ID = '7728250854';
+const UNIVERSE_ID = '7728250854'; // Replace with your universeId
 
 app.get('/likes', async (req, res) => {
-  try {
-    const url = `https://games.roblox.com/v1/universes/${UNIVERSE_ID}/configuration`;
-    const response = await axios.get(url);
+    try {
+        const url = `https://games.roblox.com/v1/games?universeIds=${UNIVERSE_ID}`;
+        const response = await axios.get(url);
 
-    console.log("Response data:", response.data);
+        console.log("Roblox API response data:", response.data);
 
-    // Safely get favoritedCount or 0 if missing
-    const likes = response.data.favoritedCount ?? 0;
+        const gameData = response.data?.data?.[0];
 
-    res.json({ likes });
-  } catch (error) {
-    console.error("Error fetching likes:", error.response?.status, error.message);
-    res.status(500).json({ error: 'Failed to fetch like count' });
-  }
+        // Try thumbsUpCount, else favoritedCount, else 0
+        const likes = gameData?.thumbsUpCount ?? gameData?.favoritedCount ?? 0;
+
+        res.json({ likes });
+    } catch (error) {
+        console.error("Error fetching like count:", error);
+        res.status(500).json({ error: 'Failed to fetch like count' });
+    }
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
