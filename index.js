@@ -12,12 +12,15 @@ app.get('/likes', async (req, res) => {
         const url = `https://games.roblox.com/v1/games?universeIds=${UNIVERSE_ID}`;
         const response = await axios.get(url);
 
-        const gameData = response.data.data[0];
-        const likes = gameData.thumbsUpCount;
+        console.log("Roblox API response data:", response.data);
+
+        // Safe extraction of likes count
+        const gameData = response.data?.data?.[0];
+        const likes = gameData?.thumbsUpCount ?? 0;
 
         res.json({ likes });
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching like count:", error);
         res.status(500).json({ error: 'Failed to fetch like count' });
     }
 });
