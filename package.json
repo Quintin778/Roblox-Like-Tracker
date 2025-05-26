@@ -1,7 +1,7 @@
 {
   "name": "roblox-like-tracker",
   "version": "1.0.0",
-  "description": "A simple API to get Roblox like count using universe ID",
+  "description": "A simple API to get Roblox like count using place ID",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -15,6 +15,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/roblox-like-tracker.git"
+    "url": "https://github.com/Quintin778/roblox-like-tracker.git"
   }
 }
